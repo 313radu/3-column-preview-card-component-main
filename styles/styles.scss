@@ -1,0 +1,344 @@
+@import "./variables";
+
+// Global reset
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// HTML font size adjustments
+html {
+    font-size: 16px;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 12px;
+    }
+}
+
+// Gradient function
+@function gradient($clr1, $clr2, $clr3) {
+    $linear-gradient: linear-gradient(to bottom right, $clr1, $clr2, $clr3);
+    $top-left-ball: radial-gradient(circle at top left, #fff 20%, transparent 21%);
+    $bottom-right-ball: radial-gradient(circle at bottom right, #fff 20%, transparent 21%);
+    // Return gradient layers
+    @return #{$linear-gradient}, #{$top-left-ball}, #{$bottom-right-ball};
+}
+
+// Body styles
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2000px;
+    overflow-x: hidden;
+    padding: 10px;
+    position: relative;
+    // Apply background gradient from the function
+    background: gradient($clr-primary-100, $clr-primary-200, $clr-primary-300);
+}
+
+ svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+// Article container
+article {
+    min-width: 320px;
+    max-width: 1200px;
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    transform-style: preserve-3d;
+    flex-wrap: wrap;
+    padding: 10px;
+    position: relative;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 20px;
+        position: static;
+        transform: none;
+        align-items: center;
+    }
+
+    @media (max-width: 480px) {
+        width: 100%;
+        padding: 5px;
+    }
+}
+
+// Card body styles
+.card-body {
+    width: 350px;
+    height: 450px;
+    background-color: white;
+    box-shadow: 20px 50px 50px 12px rgba(0, 0, 0, 0.426);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: center center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    perspective: 1000px; // Enhanced 3D perspective
+    backface-visibility: hidden;
+    will-change: transform; // Performance optimization
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    -webkit-transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -ms-transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    -webkit-transform: translateZ(100px) rotateY(0) rotateX(0) scale(1.05);
+    -moz-transform: translateZ(100px) rotateY(0) rotateX(0) scale(1.05);
+    -o-transform: translateZ(100px) rotateY(0) rotateX(0) scale(1.05);
+    transform: translateZ(100px) rotateY(0) rotateX(0) scale(1.05);
+
+    // New hover effects
+    &:hover {
+        transform: 
+            translateZ(50px) 
+            rotateX(5deg) 
+            rotateY(5deg) 
+            scale3d(1.05, 1.05, 1.05);
+        box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.2), 
+            0 10px 20px rgba(0, 0, 0, 0.1);
+        z-index: 20; // Ensure hover state is above other cards
+    }
+
+    @media (max-width: 768px) {
+        position: static;
+        width: 90%;
+        max-width: 400px;
+        transform: none !important;
+        margin-bottom: 15px;
+        padding-bottom: 2em;
+        border-radius: 1em;
+
+        &:hover {
+            transform: none; // Disable hover on mobile
+        }
+    }
+
+    @media (max-width: 480px) {
+        width: 95%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+
+    .img {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 70px;
+            height: 40px;
+            margin-left: 2em;
+        }
+    }
+
+    h1 {
+        margin-left: 1em;
+        font-size: 2rem;
+        text-transform: uppercase;
+        color: $clr-neutral-200;
+        font-family: $ff-100;
+    }
+
+    p {
+        margin-block: 2em 5em;
+        margin-inline: 2em 4em;
+        color: $clr-neutral-200;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 30px;
+    }
+
+    button {
+        width: 150px;
+        height: 50px;
+        border-radius: 3em;
+        border: 1px solid $clr-neutral-200;
+        margin-inline: 2em auto;
+        background-color: $clr-neutral-200;
+        cursor: pointer;
+        transition: 500ms ease-in-out;
+
+        a {
+            text-decoration: none;
+            color: $clr-neutral-200;
+            font-size: 1.2rem;
+            transition: 500ms ease-in-out;
+        }
+    }
+
+    // Specific hover effects for each card
+    &:nth-child(1):hover {
+        transform: 
+            translateX(-30px) 
+            translateZ(30px) 
+            rotateY(-10deg) 
+            rotateX(5deg) 
+            scale3d(1.03, 1.03, 1.03);
+    }
+
+    &:nth-child(2):hover {
+        transform: 
+            translateZ(40px) 
+            rotateY(0) 
+            rotateX(3deg) 
+            scale3d(1.07, 1.07, 1.07);
+    }
+
+    &:nth-child(3):hover {
+        transform: 
+            translateX(30px) 
+            translateZ(30px) 
+            rotateY(10deg) 
+            rotateX(5deg) 
+            scale3d(1.03, 1.03, 1.03);
+    }
+
+    // Existing child positioning
+    &:nth-child(1) {
+        transform: translateX(-50px) rotateY(-15deg) rotateX(10deg) scale(0.95);
+        background-color: $clr-primary-100;
+
+        @media (max-width: 768px) {
+            position: static;
+            transform: none;
+            width: 90%;
+        }
+
+        button a {
+            color: $clr-primary-100;
+        }
+
+        &::before {
+            left: auto;
+            right: 0;
+        }
+
+        &::after {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    &:nth-child(2) {
+        transform: translateX(0) rotateY(0) rotateX(5deg) scale(1);
+        background-color: $clr-primary-200;
+
+        @media (max-width: 768px) {
+            position: static;
+            transform: none;
+            z-index: auto;
+            width: 90%;
+        }
+
+        button a {
+            color: $clr-primary-200;
+        }
+
+        &::before,
+        &::after {
+            content: none;
+        }
+    }
+
+    &:nth-child(3) {
+        transform: translateX(50px) rotateY(15deg) rotateX(10deg) scale(0.95);
+        background-color: $clr-primary-300;
+
+        @media (max-width: 768px) {
+            position: static;
+            transform: none;
+            width: 90%;
+        }
+    }
+
+    button a {
+        color: $clr-primary-300;
+        transition: 300ms ease;
+    }
+
+    button:hover,
+    button:focus {
+        background-color: transparent;
+        border: 1px solid $clr-neutral-200;
+        transition: 300ms ease;
+    }
+
+    button:hover a,
+    button:focus a {
+        color: $clr-neutral-200;
+        transition: 300ms ease;
+    }
+}
+
+// Accessibility and reduced motion
+@media (prefers-reduced-motion: reduce) {
+    .card-body,
+    .card-body::before,
+    .card-body::after {
+        transition: none !important;
+        transform: none !important;
+        visibility: visible !important;
+        display: none !important;
+    }
+
+    .card-body:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (hover: none) {
+    .card-body:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 600px) {
+    article {
+        width: 100%;
+        min-height: 100vh;
+        position: relative;
+
+        & .card-body {
+            position: absolute;
+        }
+
+        & .card-body:nth-child(1) {
+            top: 0px;
+            left: 20%;
+        }
+        & .card-body:nth-child(2) {
+            left: 20%;
+        }
+        & .card-body:nth-child(3) {
+            bottom: 10px;
+            left: 20%;
+        }
+    }
+}
